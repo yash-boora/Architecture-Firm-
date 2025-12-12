@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNTAXARC – Architecture Studio</title>
+
+    <style>
+        *{
+            margin:0; padding:0; box-sizing:border-box;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#fafafa;
+            color:#222;
+            line-height:1.6;
+        }
+
+        header{
+            background:#fff;
+            padding:22px 42px;  
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+
+        .logo{
+            font-size:23.5px;
+            font-weight:bold;
+            letter-spacing:1.7px;
+        }
+
+        nav a{
+            margin-left:18px;
+            text-decoration:none;
+            color:#444;
+            font-weight:500;
+        }
+        nav a:hover{ color:#b8860b; }
+
+        /*
+        .hero-temp{
+            padding:50px;
+            background:red;
+        }
+        */
+
+        .hero{
+            height:70vh;
+            background:center/cover url("https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1950&q=80");
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            color:#fff;
+        }
+
+        .hero h2{
+            font-size:47px;
+            max-width:800px;
+            text-shadow:0 4px 20px rgba(0,0,0,0.55);
+            letter-spacing:0.3px;
+        }
+
+        section{
+            padding:60px 38px;
+        }
+
+        .section-title{
+            font-size:31px;
+            margin-bottom:22px;
+            text-align:center;
+        }
+
+        .about{
+            max-width:900px;
+            margin:auto;
+            color:#555;
+            font-size:18px;
+            text-align:center;
+        }
+
+
+        /* .projects{
+            display:flex;
+            flex-wrap:wrap;
+        } */
+
+
+        .projects{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:28px;
+            margin-top:40px;
+        }
+
+        .project-card{
+            background:#fff;
+            border-radius:10px;
+            padding:14px;
+            box-shadow:0 3px 13px rgba(0,0,0,0.1);
+            cursor:pointer;
+            transition:.28s;
+        }
+
+        .project-card:hover{
+            transform:translateY(-3px);
+            box-shadow:0 9px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-card img{
+ width:100%;
+            border-radius:8px;
+        }
+
+        .project-card img{
+            max-width:100%;
+        }
+
+        .project-card h4{
+            margin-top:14px;
+            font-size:20px;
+        }
+
+        .project-card p{
+color:#666;
+            margin-top:7px;
+        }
+
+        .services-content,
+        .team-content{
+            max-width:900px;
+            margin:0 auto;
+            text-align:center;
+            color:#555;
+            font-size:18px;
+        }
+
+        .team-content{ color:#444; font-size:16.5px; }
+
+
+        #projects-container{
+            margin-top:20px;
+        }
+
+        .contact-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:42px;
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .contact-info h4{
+            margin-top:18px;
+            margin-bottom:8px;
+        }
+
+        .contact-form input,
+        .contact-form textarea{
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:5px;
+            font-size:15.7px;
+        }
+
+        .btn{
+            padding:12px 24px;
+            background:#b8860b;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .btn:hover{
+            background:#9a7209;
+        }
+
+        footer{
+            background:#111;
+            color:#eee;
+            padding:30px;
+            text-align:center;
+            margin-top:40px;
+        }
+
+        @media(max-width:768px){
+            .projects{ grid-template-columns:1fr; }
+            .contact-grid{ grid-template-columns:1fr; }
+            .hero h2{ font-size:33px; }
+        }
+    </style>
+
+</head>
+<body>
+
+<header id="mainHeader">
+    <div class="logo">SYNTAXARC</div>
+    <nav>
+
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <h2>Designing Spaces That Inspire Modern Living</h2>
+</section>
+
+<section id="about">
+    <h3 class="section-title">About Us</h3>
+    <p class="about">
+        At SYNTAXARC, we blend creativity with precision to shape meaningful architectural experiences.
+        Our team focuses on minimalism, sustainability, and modern aesthetics to craft spaces that feel
+        both functional and inspiring.
+    </p>
+</section>
+
+<section id="projects">
+    <h3 class="section-title">Featured Projects</h3>
+
+    <div class="projects" id="projects-container">
+
+        <div class="project-card" onclick="showProj('Urban Residence')">
+            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=60">
+            <h4>Urban Residence</h4>
+            <p>Sleek modern home designed with open spaces and natural lighting.</p>
+        </div>
+
+        <div class="project-card" onclick="showProj('Minimalist Office')">
+            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=60">
+            <h4>Minimalist Office</h4>
+            <p>A workspace built around clarity, simplicity and creative flow.</p>
+        </div>
+
+        <div class="project-card" onclick="showProj('Luxury Villa')">
+            <img src="https://assets.telegraphindia.com/telegraph/2025/Feb/1740115640_new-project-11.jpg">
+            <h4>Luxury Villa</h4>
+            <p>An elegant retreat featuring clean lines and seamless interiors.</p>
+        </div>
+
+    </div>
+</section>
+
+<section id="services">
+    <h3 class="section-title">What We Do</h3>
+    <div class="services-content">
+        <p>Design & Planning • Interior Design • Sustainable Solutions • Project Support</p>
+    </div>
+</section>
+
+<section id="team">
+    <h3 class="section-title">Meet The Team</h3>
+    <div class="team-content">
+        <p>
+            Yash Bura — Principal Architect  
+            · Ashmit Sahu — Project Manager · Ansh Jangir — Design Director 
+        </p>
+    </div>
+</section>
+
+<section id="contact">
+    <h3 class="section-title">Let's Talk</h3>
+
+    <div class="contact-grid">
+
+        <div class="contact-info">
+            <h4>Visit Us</h4>
+            <p>123 Architecture Lane<br>Financial District<br>Hyderabad, India 500001</p>
+
+            <h4>Reach Out</h4>
+            <p>Phone: +918374667650<br>Email: hello@syntaxarc.com</p>
+
+            <h4>Office Hours</h4>
+            <p>Mon–Fri 9:00 AM – 6:00 PM</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+
+            <input id="nameField" type="text" placeholder="Your name" required>
+            <input id="emailField" type="email" placeholder="Your email" required>
+            <input id="subField" type="text" placeholder="Subject" required>
+            <textarea id="msgField" rows="5" placeholder="Message" required></textarea>
+
+            <button class="btn" type="submit">Send Message</button>
+        </form>
+
+    </div>
+</section>
+
+<footer>
+    © 2025 ARCVISION Studio — All Rights Reserved
+</footer>
+
+<script>
+
+
+    var _debugMode   = false;
+    var tempProjectList = []; 
+
+
+    const hdr = document.getElementById('mainHeader');
+
+
+    function checkScrollThing(){
+
+    }
+
+    window.addEventListener('scroll', function(){
+        let y = window.pageYOffset;
+        hdr.style.padding = (y > 60) ? '15px 40px' : '22px 42px';
+    });
+
+    let navLinks = document.querySelectorAll('nav a');
+    for(let ln of navLinks){
+        ln.onclick = function(e){
+            e.preventDefault();
+
+            let sec = document.querySelector(this.getAttribute('href'));
+            window.scrollTo({
+                top: sec.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    function showProj(name){
+        console.log("Clicked project:", name); 
+        alert("Want to learn more about " + name + "? Contact us at hello@arcvision.com");
+    }
+
+
+    function _calcOffset(el){
+        if(!el) return 0;
+        return el.offsetTop;
+    }
+
+    const form = document.getElementById('contactForm');
+    form.onsubmit = function(e){
+        e.preventDefault();
+
+        let nm  = nameField.value.trim();
+        let em  = emailField.value.trim();
+        let sub = subField.value.trim();
+        let msg = msgField.value.trim();
+
+
+        if(!nm || !em || !sub || !msg){
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        if(em.indexOf('@') < 0 || em.indexOf('.') < 0){
+            alert("Email address seems invalid.");
+            return;
+        }
+
+        alert("Thanks " + nm + "! Your message has been sent.");
+
+        nameField.value = "";
+        emailField.value = "";
+        subField.value = "";
+        msgField.value = "";
+
+        if(msg.length < 2){
+            console.log("msg too short? maybe not…");
+        }
+    }
+
+
+</script>
+
+</body>
+</html>
