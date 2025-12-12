@@ -1,384 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYNTAXARC – Architecture Studio</title>
-
-    <style>
-        *{
-            margin:0; padding:0; box-sizing:border-box;
-        }
-
-        body{
-            font-family: Arial, sans-serif;
-            background:#fafafa;
-            color:#222;
-            line-height:1.6;
-        }
-
-        header{
-            background:#fff;
-            padding:22px 42px;  
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            box-shadow:0 2px 10px rgba(0,0,0,0.1);
-            position:sticky;
-            top:0;
-            z-index:100;
-        }
-
-        .logo{
-            font-size:23.5px;
-            font-weight:bold;
-            letter-spacing:1.7px;
-        }
-
-        nav a{
-            margin-left:18px;
-            text-decoration:none;
-            color:#444;
-            font-weight:500;
-        }
-        nav a:hover{ color:#b8860b; }
-
-        /*
-        .hero-temp{
-            padding:50px;
-            background:red;
-        }
-        */
-
-        .hero{
-            height:70vh;
-            background:center/cover url("https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1950&q=80");
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            color:#fff;
-        }
-
-        .hero h2{
-            font-size:47px;
-            max-width:800px;
-            text-shadow:0 4px 20px rgba(0,0,0,0.55);
-            letter-spacing:0.3px;
-        }
-
-        section{
-            padding:60px 38px;
-        }
-
-        .section-title{
-            font-size:31px;
-            margin-bottom:22px;
-            text-align:center;
-        }
-
-        .about{
-            max-width:900px;
-            margin:auto;
-            color:#555;
-            font-size:18px;
-            text-align:center;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SYNTAXARC – Architecture Studio</title>
 
 
-        /* .projects{
-            display:flex;
-            flex-wrap:wrap;
-        } */
+<style>
+
+:root{
+  --bg:#070707;            
+  --card:#0f0f0f;          
+  --muted:#bfb8a1;        
+  --gold:#c9a962;          
+  --text:#f5f3f1;          
+  --glass: rgba(255,255,255,0.03);
+  --accent-weak: rgba(201,169,98,0.12);
+  --radius: 12px;
+  --max-width:1200px;
+  --ease: cubic-bezier(.2,.9,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+  -webkit-text-size-adjust:100%;
+}
 
 
-        .projects{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:28px;
-            margin-top:40px;
-        }
-
-        .project-card{
-            background:#fff;
-            border-radius:10px;
-            padding:14px;
-            box-shadow:0 3px 13px rgba(0,0,0,0.1);
-            cursor:pointer;
-            transition:.28s;
-        }
-
-        .project-card:hover{
-            transform:translateY(-3px);
-            box-shadow:0 9px 25px rgba(0,0,0,0.15);
-        }
-
-        .project-card img{
- width:100%;
-            border-radius:8px;
-        }
-
-        .project-card img{
-            max-width:100%;
-        }
-
-        .project-card h4{
-            margin-top:14px;
-            font-size:20px;
-        }
-
-        .project-card p{
-color:#666;
-            margin-top:7px;
-        }
-
-        .services-content,
-        .team-content{
-            max-width:900px;
-            margin:0 auto;
-            text-align:center;
-            color:#555;
-            font-size:18px;
-        }
-
-        .team-content{ color:#444; font-size:16.5px; }
+header{
+  position:fixed; top:0; left:0; right:0;
+  height:84px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 36px;
+  z-index:1100;
+  background: linear-gradient(180deg, rgba(7,7,7,0.36) 0%, rgba(7,7,7,0.08) 100%);
+  backdrop-filter: blur(4px);
+  transition:height .28s var(--ease), padding .28s var(--ease), box-shadow .28s var(--ease);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+header.scrolled{
+  height:66px; padding:14px 36px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.55);
+}
 
 
-        #projects-container{
-            margin-top:20px;
-        }
+.logo{ font-weight:700; letter-spacing:2px; font-size:20px; color:var(--text); text-decoration:none; }
 
-        .contact-grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:42px;
-            max-width:1000px;
-            margin:auto;
-        }
 
-        .contact-info h4{
-            margin-top:18px;
-            margin-bottom:8px;
-        }
+nav{ display:flex; gap:18px; align-items:center; }
+nav a{
+  color:rgba(245,243,241,0.85);
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  padding:6px 8px;
+  transition: color .18s var(--ease), transform .18s var(--ease);
+}
+nav a:hover{ color:var(--gold); transform:translateY(-1px) }
+nav a.active{ color:var(--gold); box-shadow: inset 0 -2px var(--gold) }
 
-        .contact-form input,
-        .contact-form textarea{
-            padding:12px;
-            border:1px solid #ddd;
-            border-radius:5px;
-            font-size:15.7px;
-        }
 
-        .btn{
-            padding:12px 24px;
-            background:#b8860b;
-            color:white;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-            font-size:16px;
-        }
+.container{ max-width:var(--max-width); margin:0 auto; padding:0 24px; }
 
-        .btn:hover{
-            background:#9a7209;
-        }
 
-        footer{
-            background:#111;
-            color:#eee;
-            padding:30px;
-            text-align:center;
-            margin-top:40px;
-        }
+.hero{
+  height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45)),
+    url("https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+  text-align:center;
+  padding:0 16px;
+}
+.hero-inner{ max-width:960px; }
+.hero h2{
+  font-weight:600; font-size:56px; letter-spacing:2px; margin-bottom:18px;
+  color:var(--text);
+  text-transform: none;
+  line-height:1.02;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+.hero p{
+  color:var(--muted); font-size:16px; margin-bottom:30px;
+}
 
-        @media(max-width:768px){
-            .projects{ grid-template-columns:1fr; }
-            .contact-grid{ grid-template-columns:1fr; }
-            .hero h2{ font-size:33px; }
-        }
-    </style>
 
+.cta{
+  display:inline-block;
+  padding:14px 30px;
+  border-radius:999px;
+  border:1px solid rgba(201,169,98,0.16);
+  color:var(--gold);
+  background: linear-gradient(180deg, transparent, rgba(201,169,98,0.02));
+  text-decoration:none;
+  font-weight:600;
+  letter-spacing:1.2px;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+.cta:hover{ transform:translateY(-3px); box-shadow: 0 8px 30px rgba(201,169,98,0.06) }
+
+
+.scroll-indicator{ position:absolute; bottom:48px; left:50%; transform:translateX(-50%); width:36px; height:58px; border-radius:18px; border:2px solid rgba(201,169,98,0.16); display:flex; align-items:flex-start; justify-content:center; padding-top:8px }
+.scroll-indicator::before{ content:""; width:6px; height:12px; border-radius:4px; background:var(--gold); animation: bounce 1.6s infinite; }
+@keyframes bounce{ 0%{transform:translateY(0)}50%{transform:translateY(14px)}100%{transform:translateY(0)} }
+
+
+.section{ padding:92px 0; }
+.section-title{
+  font-size:30px; font-weight:600; letter-spacing:2px; color:var(--text);
+  display:inline-block; margin-bottom:12px;
+}
+.section-sub{ color:var(--muted); margin-top:8px; font-size:15px; max-width:780px; }
+
+
+.grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+.grid-2{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
+
+
+.projects{ margin-top:36px }
+.project-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius: var(--radius);
+  overflow:hidden;
+  min-height:420px;
+  display:flex; flex-direction:column;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  transition: transform .36s var(--ease), box-shadow .36s var(--ease);
+  border:1px solid rgba(255,255,255,0.02);
+  position:relative;
+}
+.project-card:hover{ transform:translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.7) }
+
+
+.project-media{
+  width:100%; height:58%; overflow:hidden; background:var(--glass);
+}
+.project-media img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease) }
+.project-card:hover .project-media img{ transform: scale(1.06) }
+
+
+.project-meta{
+  padding:22px;
+  display:flex; flex-direction:column; gap:10px; justify-content:flex-end;
+}
+.project-title{ font-size:20px; font-weight:600; color:var(--text) }
+.project-cat{ font-size:12px; color:var(--gold); text-transform:uppercase; letter-spacing:1.6px }
+
+
+.project-accent{ position:absolute; top:12px; right:12px; width:38px; height:6px; background: linear-gradient(90deg,var(--gold), rgba(201,169,98,0.6)); border-radius:4px; opacity:0.95 }
+
+
+.service-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  padding:28px; border-radius:10px; border:1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+.service-number{ font-weight:800; color:var(--gold); font-size:20px }
+.service-title{ font-weight:700; margin-top:8px; font-size:18px; color:var(--text) }
+.service-desc{ color:var(--muted); margin-top:8px; font-size:14px }
+
+
+.team-member{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:10px; padding:18px; text-align:center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+.team-photo{
+  width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:12px;
+  filter:grayscale(60%); transition: filter .28s var(--ease), transform .28s var(--ease);
+}
+.team-member:hover .team-photo{ filter:grayscale(0); transform:translateY(-4px) }
+.team-name{ font-weight:700; color:var(--text) }
+.team-pos{ color:var(--gold); font-size:13px; letter-spacing:1.2px }
+
+
+.stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center; }
+.stat { padding:18px; }
+.stat-number{ font-weight:800; font-size:28px; color:var(--gold) }
+.stat-label{ color:var(--muted); margin-top:6px; font-size:13px }
+
+
+.contact-grid{ display:grid; grid-template-columns:1fr 420px; gap:36px; align-items:start; max-width:var(--max-width); margin:0 auto; }
+.contact-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:12px; padding:22px; border:1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+.contact-item h4{ color:var(--gold); margin-bottom:8px; font-size:14px }
+.contact-item p{ color:var(--muted); font-size:14px }
+
+
+.form-row{ display:flex; flex-direction:column; gap:10px; }
+.input, textarea.input{
+  background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text); padding:12px 14px; border-radius:8px;
+  font-size:14px; outline:none; transition: box-shadow .18s var(--ease), border-color .18s var(--ease);
+}
+.input:focus, textarea.input:focus{ border-color: rgba(201,169,98,0.45); box-shadow: 0 6px 30px rgba(201,169,98,0.06) }
+textarea.input{ min-height:140px; resize:vertical }
+
+
+.btn-primary{
+  display:inline-block; padding:12px 20px; background: linear-gradient(90deg, var(--gold), rgba(201,169,98,0.9));
+  color:#0a0a0a; border-radius:999px; border:none; font-weight:700; cursor:pointer;
+  box-shadow: 0 8px 30px rgba(201,169,98,0.06);
+}
+.btn-primary:hover{ transform:translateY(-3px) }
+
+
+footer{
+  padding:30px; text-align:center; color:rgba(245,243,241,0.7); border-top:1px solid rgba(255,255,255,0.02)
+}
+
+
+@media (max-width:1024px){
+  .grid-3{ grid-template-columns:repeat(2,1fr) }
+  .stats-grid{ grid-template-columns:repeat(2,1fr) }
+  .contact-grid{ grid-template-columns:1fr }
+}
+@media (max-width:640px){
+  header{ padding:12px 18px }
+  .hero h2{ font-size:28px }
+  .grid-3{ grid-template-columns:1fr }
+  nav{ display:none } /* simple mobile fallback — keep HTML unchanged */
+}
+
+
+.center{ display:flex; justify-content:center; align-items:center }
+</style>
 </head>
 <body>
 
-<header id="mainHeader">
-    <div class="logo">SYNTAXARC</div>
-    <nav>
 
-        <a href="#home">Home</a>
-        <a href="#projects">Projects</a>
-        <a href="#services">Services</a>
-        <a href="#team">Team</a>
-        <a href="#contact">Contact</a>
+<header id="mainHeader">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <a class="logo" href="#home">SYNTAXARC</a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
     </nav>
+  </div>
 </header>
 
+
 <section id="home" class="hero">
+  <div class="hero-inner">
     <h2>Designing Spaces That Inspire Modern Living</h2>
+    <p class="center" style="justify-content:center"><a class="cta" href="#projects">Explore Our Work</a></p>
+  </div>
+  <div class="scroll-indicator"></div>
 </section>
 
-<section id="about">
-    <h3 class="section-title">About Us</h3>
-    <p class="about">
-        At SYNTAXARC, we blend creativity with precision to shape meaningful architectural experiences.
-        Our team focuses on minimalism, sustainability, and modern aesthetics to craft spaces that feel
-        both functional and inspiring.
-    </p>
+
+<section id="about" class="section container">
+  <div style="text-align:center;margin:0 auto;max-width:880px">
+    <div class="section-title">About Us</div>
+    <p class="section-sub">At SYNTAXARC, we blend creativity with precision to shape meaningful architectural experiences. Our team focuses on minimalism, sustainability, and modern aesthetics to craft spaces that feel both functional and inspiring.</p>
+  </div>
 </section>
 
-<section id="projects">
-    <h3 class="section-title">Featured Projects</h3>
 
-    <div class="projects" id="projects-container">
+<section id="projects" class="section container">
+  <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+    <div class="section-title">Featured Projects</div>
+    <div class="section-sub" style="max-width:920px">A selection of recent work across residential, commercial and cultural projects.</div>
+  </div>
 
-        <div class="project-card" onclick="showProj('Urban Residence')">
-            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=60">
-            <h4>Urban Residence</h4>
-            <p>Sleek modern home designed with open spaces and natural lighting.</p>
-        </div>
+  <div class="projects grid-3" id="projects-container" style="margin-top:28px">
 
-        <div class="project-card" onclick="showProj('Minimalist Office')">
-            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=60">
-            <h4>Minimalist Office</h4>
-            <p>A workspace built around clarity, simplicity and creative flow.</p>
-        </div>
+    <article class="project-card" data-title="Urban Residence" tabindex="0">
+      <div class="project-accent" aria-hidden="true"></div>
+      <div class="project-media"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=60" alt="Urban Residence"></div>
+      <div class="project-meta">
+        <div class="project-title">Urban Residence</div>
+        <div class="project-cat">Residential</div>
+      </div>
+    </article>
 
-        <div class="project-card" onclick="showProj('Luxury Villa')">
-            <img src="https://assets.telegraphindia.com/telegraph/2025/Feb/1740115640_new-project-11.jpg">
-            <h4>Luxury Villa</h4>
-            <p>An elegant retreat featuring clean lines and seamless interiors.</p>
-        </div>
+    <article class="project-card" data-title="Minimalist Office" tabindex="0">
+      <div class="project-accent" aria-hidden="true"></div>
+      <div class="project-media"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1400&q=60" alt="Minimalist Office"></div>
+      <div class="project-meta">
+        <div class="project-title">Minimalist Office</div>
+        <div class="project-cat">Commercial</div>
+      </div>
+    </article>
 
+    <article class="project-card" data-title="Luxury Villa" tabindex="0">
+      <div class="project-accent" aria-hidden="true"></div>
+      <div class="project-media"><img src="https://assets.telegraphindia.com/telegraph/2025/Feb/1740115640_new-project-11.jpg" alt="Luxury Villa"></div>
+      <div class="project-meta">
+        <div class="project-title">Luxury Villa</div>
+        <div class="project-cat">Hospitality</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<section class="section container">
+  <div style="max-width:var(--max-width);margin:0 auto">
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-number">250+</div><div class="stat-label">Projects Completed</div></div>
+      <div class="stat"><div class="stat-number">45</div><div class="stat-label">Awards Won</div></div>
+      <div class="stat"><div class="stat-number">15</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-number">98%</div><div class="stat-label">Client Satisfaction</div></div>
     </div>
+  </div>
 </section>
 
-<section id="services">
-    <h3 class="section-title">What We Do</h3>
-    <div class="services-content">
-        <p>Design & Planning • Interior Design • Sustainable Solutions • Project Support</p>
+
+<section id="services" class="section container">
+  <div style="text-align:center">
+    <div class="section-title">What We Do</div>
+    <div class="section-sub">Design & Planning • Interior Design • Sustainable Solutions • Project Support</div>
+  </div>
+
+  <div style="margin-top:36px" class="grid-3">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <div class="service-title">Architecture</div>
+      <div class="service-desc">From concept to completion, we create spaces that inspire and endure.</div>
     </div>
-</section>
 
-<section id="team">
-    <h3 class="section-title">Meet The Team</h3>
-    <div class="team-content">
-        <p>
-            Yash Bura — Principal Architect  
-            · Ashmit Sahu — Project Manager · Ansh Jangir — Design Director 
-        </p>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <div class="service-title">Interior Design</div>
+      <div class="service-desc">Crafting interiors that reflect personality and purpose.</div>
     </div>
-</section>
 
-<section id="contact">
-    <h3 class="section-title">Let's Talk</h3>
-
-    <div class="contact-grid">
-
-        <div class="contact-info">
-            <h4>Visit Us</h4>
-            <p>123 Architecture Lane<br>Financial District<br>Hyderabad, India 500001</p>
-
-            <h4>Reach Out</h4>
-            <p>Phone: +918374667650<br>Email: hello@syntaxarc.com</p>
-
-            <h4>Office Hours</h4>
-            <p>Mon–Fri 9:00 AM – 6:00 PM</p>
-        </div>
-
-        <form class="contact-form" id="contactForm">
-
-            <input id="nameField" type="text" placeholder="Your name" required>
-            <input id="emailField" type="email" placeholder="Your email" required>
-            <input id="subField" type="text" placeholder="Subject" required>
-            <textarea id="msgField" rows="5" placeholder="Message" required></textarea>
-
-            <button class="btn" type="submit">Send Message</button>
-        </form>
-
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <div class="service-title">Urban Planning</div>
+      <div class="service-desc">Designing sustainable communities for the future.</div>
     </div>
+  </div>
 </section>
+
+
+<section id="contact" class="section">
+  <div class="container contact-grid">
+    <div class="contact-card">
+      <div class="contact-item">
+        <h4>Visit Us</h4>
+        <p>123 Architecture Lane<br>Financial District<br>Hyderabad, India 500001</p>
+      </div>
+      <div style="height:12px"></div>
+      <div class="contact-item">
+        <h4>Reach Out</h4>
+        <p>Phone: +918374667650<br>Email: hello@syntaxarc.com</p>
+      </div>
+      <div style="height:12px"></div>
+      <div class="contact-item">
+        <h4>Office Hours</h4>
+        <p>Mon–Fri 9:00 AM – 6:00 PM</p>
+      </div>
+    </div>
+
+    <form id="contactForm" class="contact-card" aria-label="Contact form" novalidate>
+      <div class="form-row">
+        <input class="input" id="nameField" type="text" placeholder="Your name" required>
+        <input class="input" id="emailField" type="email" placeholder="Your email" required>
+        <input class="input" id="subField" type="text" placeholder="Subject" required>
+        <textarea class="input" id="msgField" rows="5" placeholder="Message" required></textarea>
+      </div>
+
+      <div style="margin-top:12px; display:flex; justify-content:flex-end">
+        <button class="btn-primary" type="submit">Send Message</button>
+      </div>
+    </form>
+  </div>
+</section>
+
 
 <footer>
-    © 2025 ARCVISION Studio — All Rights Reserved
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div style="font-weight:700; letter-spacing:2px">SYNTAXARC</div>
+    <div style="color:var(--muted)">© 2025 SYNTAXARC — All Rights Reserved</div>
+    <div style="display:flex;gap:14px">
+      <a href="#" style="color:var(--muted);text-decoration:none">Instagram</a>
+      <a href="#" style="color:var(--muted);text-decoration:none">LinkedIn</a>
+      <a href="#" style="color:var(--muted);text-decoration:none">Behance</a>
+    </div>
+  </div>
 </footer>
 
-<script>
+
+<div id="projModal" role="dialog" aria-hidden="true" aria-labelledby="projTitle" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;z-index:1200">
+  <div style="width:100%;max-width:720px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:22px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(0,0,0,0.8);">
+    <button id="projClose" aria-label="Close" style="float:right;background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer">✕</button>
+    <h3 id="projTitle" style="margin-top:6px;font-size:22px;color:var(--text)"></h3>
+    <p id="projDesc" style="color:var(--muted);margin-top:8px">Detailed project information can go here. For demo, we provide contact link below.</p>
+    <div style="margin-top:18px; display:flex;gap:12px; justify-content:flex-end">
+      <a id="projContact" href="mailto:hello@syntaxarc.com" style="background:var(--gold);color:#0a0a0a;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none">Contact Us</a>
+      <button id="projClose2" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer">Close</button>
+    </div>
+  </div>
+</div>
 
 
-    var _debugMode   = false;
-    var tempProjectList = []; 
 
-
-    const hdr = document.getElementById('mainHeader');
-
-
-    function checkScrollThing(){
-
-    }
-
-    window.addEventListener('scroll', function(){
-        let y = window.pageYOffset;
-        hdr.style.padding = (y > 60) ? '15px 40px' : '22px 42px';
-    });
-
-    let navLinks = document.querySelectorAll('nav a');
-    for(let ln of navLinks){
-        ln.onclick = function(e){
-            e.preventDefault();
-
-            let sec = document.querySelector(this.getAttribute('href'));
-            window.scrollTo({
-                top: sec.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    function showProj(name){
-        console.log("Clicked project:", name); 
-        alert("Want to learn more about " + name + "? Contact us at hello@arcvision.com");
-    }
-
-
-    function _calcOffset(el){
-        if(!el) return 0;
-        return el.offsetTop;
-    }
-
-    const form = document.getElementById('contactForm');
-    form.onsubmit = function(e){
-        e.preventDefault();
-
-        let nm  = nameField.value.trim();
-        let em  = emailField.value.trim();
-        let sub = subField.value.trim();
-        let msg = msgField.value.trim();
-
-
-        if(!nm || !em || !sub || !msg){
-            alert("Please fill out all fields.");
-            return;
-        }
-
-        if(em.indexOf('@') < 0 || em.indexOf('.') < 0){
-            alert("Email address seems invalid.");
-            return;
-        }
-
-        alert("Thanks " + nm + "! Your message has been sent.");
-
-        nameField.value = "";
-        emailField.value = "";
-        subField.value = "";
-        msgField.value = "";
-
-        if(msg.length < 2){
-            console.log("msg too short? maybe not…");
-        }
-    }
-
-
-</script>
 
 </body>
 </html>
