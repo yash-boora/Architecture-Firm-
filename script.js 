@@ -1,0 +1,125 @@
+function qs(selector, root) { return (root || document).querySelector(selector); }
+function qsa(selector, root) { return Array.from((root || document).querySelectorAll(selector)); }
+
+
+(function headerScroll(){
+  const header = qs('#mainHeader');
+  let lastY = 0;
+  window.addEventListener('scroll', function onScroll(){
+    const y = window.pageYOffset || document.documentElement.scrollTop;
+    if (y > 60) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+    lastY = y;
+  }, { passive: true });
+})();
+
+
+(function smoothNav(){
+  const links = qsa('nav a');
+  links.forEach(a => {
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      const target = qs(this.getAttribute('href'));
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      setTimeout(()=> { try { target.setAttribute('tabindex','-1'); target.focus(); } catch (err) {} }, 550);
+    });
+  });
+})();
+
+
+(function projectsModal(){
+  const cards = qsa('.project-card');
+  const modal = qs('#projModal');
+  const titleEl = qs('#projTitle');
+  const descEl  = qs('#projDesc');
+  const closeBtns = [qs('#projClose'), qs('#projClose2')];
+
+  function open(title){
+    titleEl.textContent = title;
+    descEl.textContent = title + ' — Example project case study. Contact us for full portfolio and drawings.';
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden','false');
+    // trap focus (simple)
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close(){
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach(card => {
+    // click
+    card.addEventListener('click', function(){
+      const t = this.dataset.title || this.querySelector('.project-title')?.textContent || 'Project';
+      open(t);
+    });
+
+    
+    card.addEventListener('keypress', function(e){
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const t = this.dataset.title || this.querySelector('.project-title')?.textContent || 'Project';
+        open(t);
+      }
+    });
+  });
+
+  closeBtns.forEach(b => b && b.addEventListener('click', close));
+  
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) close();
+  });
+  
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.style.display === 'flex') close();
+  });
+})();
+
+
+(function contactForm(){
+  const form = qs('#contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = qs('#nameField').value.trim();
+    const email = qs('#emailField').value.trim();
+    const subject = qs('#subField').value.trim();
+    const message = qs('#msgField').value.trim();
+
+    
+    if (!name || !email || !subject || !message) {
+      alert('Please fill all fields before sending.');
+      return;
+    }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email)) {
+      alert('Please provide a valid email address.');
+      return;
+    }
+
+    
+    console.log('Contact payload:', { name, email, subject, message, sentAt: new Date().toISOString() });
+
+    
+    alert('Thanks ' + name + '! Your message has been sent. We will be in touch shortly.');
+
+    form.reset();
+  });
+})();
+
+
+(function keyboardNav(){
+  function onFirstTab(e){
+    if (e.key === 'Tab') {
+      document.documentElement.classList.add('user-is-tabbing');
+      window.removeEventListener('keydown', onFirstTab);
+    }
+  }
+  window.addEventListener('keydown', onFirstTab);
+})();
+
